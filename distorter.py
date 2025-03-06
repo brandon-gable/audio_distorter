@@ -1,5 +1,6 @@
 import os
 from pydub import AudioSegment
+import time
 
 # Reduces bitrate of the audio file
 def makeAudioSoundBad(audio: AudioSegment, filePath: str) -> AudioSegment:
@@ -14,6 +15,8 @@ def makeAudioSoundBad(audio: AudioSegment, filePath: str) -> AudioSegment:
     return newAudioFile
 
 filePath = input("Enter the file path (and name)\n(must be an mp3): ")
+filePath = filePath.replace('"', '')
 audio = AudioSegment.from_mp3(filePath)
 badAudio = makeAudioSoundBad(audio, filePath)
 print("The worsened file is in the same directory as the original!")
+time.sleep(5)

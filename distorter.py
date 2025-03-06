@@ -11,7 +11,7 @@ def makeAudioSoundBad(audio: AudioSegment, filePath: str) -> AudioSegment:
         newFileName += ".mp3"
     newAudioPath = os.path.join(fileDir, newFileName)
     newAudioFile = audio.export(newAudioPath, format="mp3", bitrate="4k")
-    print("file saved as " + fileDir + newFileName)
+    print("file saved as " + fileDir + "/" + newFileName)
     return newAudioFile
 
 filePath = input("Enter the file path (and name)\n(must be an mp3): ")

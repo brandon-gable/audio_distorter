@@ -9,9 +9,6 @@ Select the download appropriate for your operating system.
 Other versions probably work but this was built and tested on Python 3.13.
 
 #### Libraries Used
-audioop-lts v0.2.1
-future v1.0.0
-numpy v2.2.3
-pip v25.0.1
-pydub v0.25.1
+see [here](requirements.txt)
+
 Support for a simple install with libraries included WIP.

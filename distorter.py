@@ -16,7 +16,10 @@ def makeAudioSoundBad(audio: AudioSegment, filePath: str) -> AudioSegment:
 
 filePath = input("Enter the file path (and name)\n(must be an mp3): ")
 filePath = filePath.replace('"', '')
-audio = AudioSegment.from_mp3(filePath)
-badAudio = makeAudioSoundBad(audio, filePath)
-print("The worsened file is in the same directory as the original!")
+if os.path.exists(filePath):
+    audio = AudioSegment.from_mp3(filePath)
+    badAudio = makeAudioSoundBad(audio, filePath)
+    print("The worsened file is in the same directory as the original!")
+else:
+    print("Invalid file/directory")
 time.sleep(5)

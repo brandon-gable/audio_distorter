@@ -31,7 +31,7 @@ def fileInputWindow(audio: AudioSegment, filePath: str):
     window.mainloop()
 
 def updateFilePath():
-    filePath = fileEntry.get().replace('"', '')
+    filePath = os.path.expanduser(fileEntry.get().replace('"', ''))
     if os.path.exists(filePath):
         audio = AudioSegment.from_mp3(filePath)
         fileInputWindow(audio, filePath)

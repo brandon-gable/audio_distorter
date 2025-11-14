@@ -2,6 +2,7 @@ import os
 from pydub import AudioSegment
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import filedialog as fd
 
 root = tk.Tk()
 root.title("Audio Distorter")
@@ -15,9 +16,8 @@ def newAudioFile(audio: AudioSegment, filePath: str, newFileStringVar: tk.String
     fileDir = os.path.dirname(filePath)
     newAudioPath = os.path.join(fileDir, newFileName)
     audio.export(newAudioPath, format="mp3", bitrate="16k")
-    messagebox.showinfo(title="Success", message="file saved as " + fileDir + "/" + newFileName)
     window.destroy()
-
+    messagebox.showinfo(title="Success", message="file saved as " + fileDir + "/" + newFileName)
 
 def fileInputWindow(audio: AudioSegment, filePath: str):
     window = tk.Toplevel(root)
@@ -28,25 +28,34 @@ def fileInputWindow(audio: AudioSegment, filePath: str):
     newFileEntry.pack()
     button = tk.Button(window, text="Enter", command=lambda: newAudioFile(audio, filePath, newFileStringVar, window))
     button.pack()
-    window.mainloop()
+
+def selectFile():
+    fileTypes = [('MP3 Files', 'mp3')]
+    fileName = fd.askopenfilename(
+        title = 'Open a file',
+        initialdir = os.path.expanduser('~'),
+        filetypes = fileTypes
+    )
+    if not fileName:
+        return None
+    else:
+        return str(fileName)
 
 def updateFilePath():
-    filePath = os.path.expanduser(fileEntry.get().replace('"', ''))
+    selected = selectFile()
+    if not selected:
+        return
+    filePath = os.path.expanduser(selected.replace('"', ''))
     if os.path.exists(filePath):
         audio = AudioSegment.from_mp3(filePath)
         fileInputWindow(audio, filePath)
-        messagebox.showinfo(title="Success", message="The worsened file is in the same directory as the original!")
     else:
         messagebox.showerror(title="Error", message="Ivalid file/directory")
 
-lbl = tk.Label(root, text = "Enter the file path (and name) (must be an mp3): ")
+lbl = tk.Label(root, text = "Select an mp3 file to distort:")
 lbl.pack()
 
-fileEntry = tk.StringVar()
-text = tk.Entry(root, textvariable=fileEntry)
-text.pack()
-
-button = tk.Button(root, text="Enter", command=updateFilePath)
-button.pack()
+openButton = tk.Button(root, text='Browse Files', command=updateFilePath)
+openButton.pack()
 
 root.mainloop()
